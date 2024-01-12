@@ -23,8 +23,11 @@ const game = inject('game')
       </h1>
       <Transition name="fade-transition">
         <div v-if="game.isAvgSalesAndRevUnlocked">
-          <h1>{{ $t('avgRev') }}: {{ $t('currency', 0, { number: game.avgRev }) }}</h1>
-          <h1>{{ $t('avgSales') }}: {{ game.avgSales }}</h1>
+          <h1>
+            {{ $t('avgRev') }}:
+            {{ $t('currency', 0, { number: formatWithCommas(game.avgRev, 2) }) }}
+          </h1>
+          <h1>{{ $t('avgSales') }}: {{ formatWithCommas(Math.round(game.avgSales)) }}</h1>
         </div>
       </Transition>
       <h1>

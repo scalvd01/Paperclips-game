@@ -100,7 +100,7 @@ export default function () {
   let incomeThen
   let incomeNow
   let trueAvgRev
-  let avgSales
+  let avrgSales
   let incomeLastSecond
   let sum
   function calculateRev() {
@@ -130,7 +130,7 @@ export default function () {
       chanceOfPurchase = 0
     }
 
-    avgSales = chanceOfPurchase * (0.7 * Math.pow(game.value.publicDemand, 1.15)) * 10
+    avrgSales = chanceOfPurchase * (0.7 * Math.pow(game.value.publicDemand, 1.15)) * 10
     avgRev =
       chanceOfPurchase *
       (0.7 * Math.pow(game.value.publicDemand, 1.15)) *
@@ -139,12 +139,12 @@ export default function () {
 
     if (game.value.publicDemand > game.value.unsoldInventory) {
       avgRev = trueAvgRev
-      avgSales = avgRev / game.value.pricePerClip
+      avrgSales = avgRev / game.value.pricePerClip
     }
 
-    game.value.avgSales = formatWithCommas(Math.round(avgSales))
+    game.value.avgSales = avrgSales
 
-    game.value.avgRev = formatWithCommas(avgRev, 2)
+    game.value.avgRev = avgRev
   }
 
   let tempOps = 0
