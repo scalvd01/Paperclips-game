@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark {
+  background: #20212a;
+  color: #fff;
+}
+
+* {
+  touch-action: manipulation;
+}
+
+
+.fade-transition-enter-active {
+  transition: all 0.3s ease-out;
+  animation:blink-1 .3s both
+}
+
+.fade-transition-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.fade-transition-enter-from,
+.fade-transition-leave-to {
+  transform: translateX(40px);
+  opacity: 0;
+}
+
+@keyframes blink-1{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
