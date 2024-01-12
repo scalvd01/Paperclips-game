@@ -3,16 +3,18 @@ import CustomButton from './CustomButton.vue'
 import CustomToggle from './CustomToggle.vue'
 import functions from '@/composables/Functions.js'
 const { formatWithCommas } = functions()
-import { inject,computed } from 'vue'
+import { inject, computed, onMounted } from 'vue'
 import { watchOnce } from '@vueuse/core'
 
 const game = inject('game')
 
 const autoClipperUnlockWatcher = computed(() => game.value.availableFunds >= 5)
 
-watchOnce(autoClipperUnlockWatcher, () => {
-  console.log('autocliper desbloqueado');
-  game.value.isAutoClipperUnlocked = true
+onMounted(() => {
+  watchOnce(autoClipperUnlockWatcher, () => {
+    // console.log('autocliper desbloqueado')
+    game.value.isAutoClipperUnlocked = true
+  })
 })
 </script>
 

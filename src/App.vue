@@ -12,45 +12,44 @@ import { useIntervalFn } from '@vueuse/core'
 import functions from '@/composables/Functions.js'
 const { mainLoopFunction, slowLoopFunction, saveLoadFunction } = functions()
 
-import { onMounted, provide , computed} from 'vue'
+import { onMounted, provide, computed } from 'vue'
 import { initFlowbite } from 'flowbite'
 import { watchOnce } from '@vueuse/core'
 
 // initialize components based on data attribute selectors
 onMounted(() => {
   initFlowbite()
+
+  //MAIN LOOP
+  const { pauseMainLoop, resumeMainLoop, isActiveMainLoop } = useIntervalFn(() => {
+    mainLoopFunction()
+  }, 10)
+
+  // SLOW LOOP
+  const { pauseSlowLoop, resumeSlowLoop, isActiveSlowLoop } = useIntervalFn(() => {
+    slowLoopFunction()
+  }, 100)
+
+  // 1 SECOND LOOP
+  const { pauseSaveLoop, resumeSaveLoop, isActiveSaveLoop } = useIntervalFn(() => {
+    saveLoadFunction('save')
+  }, 1000)
+  saveLoadFunction('load')
+
+  watchOnce(upgradesCardUnlockWatcher, () => {
+    game.value.isUpgradesCardUnlocked = true
+  })
+  
+  watchOnce(researchCardUnlockWatcher, () => {
+    game.value.isResearchUnlocked = true
+  })
 })
 
 provide('game', game)
 
-//MAIN LOOP
-const { pauseMainLoop, resumeMainLoop, isActiveMainLoop } = useIntervalFn(() => {
-  mainLoopFunction()
-}, 10)
-
-// SLOW LOOP
-const { pauseSlowLoop, resumeSlowLoop, isActiveSlowLoop } = useIntervalFn(() => {
-  slowLoopFunction()
-}, 100)
-
-// 1 SECOND LOOP
-const { pauseSaveLoop, resumeSaveLoop, isActiveSaveLoop } = useIntervalFn(() => {
-  saveLoadFunction('save')
-}, 1000)
-saveLoadFunction('load')
-
-
-
-const upgradesCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
-
-watchOnce(upgradesCardUnlockWatcher, () => {
-  game.value.isUpgradesCardUnlocked = true
-})
 const researchCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
 
-watchOnce(researchCardUnlockWatcher, () => {
-  game.value.isResearchUnlocked = true
-})
+const upgradesCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
 </script>
 
 <template>
@@ -66,12 +65,11 @@ watchOnce(researchCardUnlockWatcher, () => {
         <!-- <CardResearch v-if="game.isResearchUnlocked" /> -->
       </Transition>
       <Transition name="fade-transition">
-        <CardUpgrades v-if="upgradesCardUnlockWatcher"/>
+        <CardUpgrades v-if="upgradesCardUnlockWatcher" />
         <!-- <CardUpgrades v-if="game.isUpgradesCardUnlocked"/> -->
       </Transition>
     </div>
   </main>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

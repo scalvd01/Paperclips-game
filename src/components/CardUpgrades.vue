@@ -1,5 +1,5 @@
 <script setup>
-import { inject, computed } from 'vue'
+import { inject, computed, onMounted } from 'vue'
 import allProjects from '@/composables/Projects'
 import { watchOnce } from '@vueuse/core'
 const game = inject('game')
@@ -9,7 +9,6 @@ const availableProjects = computed(() => {
     (project) => !project.isUsed && (project.trigger() || project.isTriggered)
   )
 })
-
 function updateIsTriggered() {
   allProjects.forEach((project) => {
     if (project.trigger()) {
@@ -23,32 +22,45 @@ function executeProject(projectID) {
   game.value.applyProjectEffect(project.effect)
   project.isUsed = true
 }
-
-//watchers para los proyectos de cable que tienen que llegar a una determinada longitud
-watchOnce(
-  computed(() => game.value.wireLongitude >= 1500 && allProjects.find((project) => project.id === 'p10').isUsed),
-  () => {
-    allProjects.find((project) => project.id === 'p11').isTriggered = true
-  }
-)
-watchOnce(
-  computed(() => game.value.wireLongitude >= 2600&& allProjects.find((project) => project.id === 'p11').isUsed),
-  () => {
-    allProjects.find((project) => project.id === 'p13').isTriggered = true
-  }
-)
-watchOnce(
-  computed(() => game.value.wireLongitude >= 5000 && allProjects.find((project) => project.id === 'p13').isUsed),
-  () => {
-    allProjects.find((project) => project.id === 'p14').isTriggered = true
-  }
-)
-watchOnce(
-  computed(() => game.value.wireCost >= 100),
-  () => {
-    allProjects.find((project) => project.id === 'p15').isTriggered = true
-  }
-)
+onMounted(() => {
+  //watchers para los proyectos de cable que tienen que llegar a una determinada longitud
+  watchOnce(
+    computed(
+      () =>
+        game.value.wireLongitude >= 1500 &&
+        allProjects.find((project) => project.id === 'p10').isUsed
+    ),
+    () => {
+      allProjects.find((project) => project.id === 'p11').isTriggered = true
+    }
+  )
+  watchOnce(
+    computed(
+      () =>
+        game.value.wireLongitude >= 2600 &&
+        allProjects.find((project) => project.id === 'p11').isUsed
+    ),
+    () => {
+      allProjects.find((project) => project.id === 'p13').isTriggered = true
+    }
+  )
+  watchOnce(
+    computed(
+      () =>
+        game.value.wireLongitude >= 5000 &&
+        allProjects.find((project) => project.id === 'p13').isUsed
+    ),
+    () => {
+      allProjects.find((project) => project.id === 'p14').isTriggered = true
+    }
+  )
+  watchOnce(
+    computed(() => game.value.wireCost >= 100),
+    () => {
+      allProjects.find((project) => project.id === 'p15').isTriggered = true
+    }
+  )
+})
 
 const numberOfCompletedProjects = computed(() => {
   return allProjects.filter((project) => project.isUsed).length
@@ -92,10 +104,20 @@ const numberOfCompletedProjects = computed(() => {
 }
 .list-enter-active {
   transition: all 0.3s ease-out;
-  animation:blink-1 .3s both
+  animation: blink-1 0.3s both;
 }
 
-@keyframes blink-1{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
+@keyframes blink-1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
 
 .list-leave-active {
   transition: all 0.2s ease-in;
