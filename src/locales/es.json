@@ -24,36 +24,25 @@
   "unidadLongitudCable": "cm",
   "autoClippers": "Auto Clippers",
   "megaClippers": "Mega Clippers",
-  "availableFundsInfo":"Tus <strong>Fondos Disponibles</strong> se muestran en la primera línea de la sección de Empresa, y se dan en cantidades de euros. Estos fondos se usan para comprar varias cosas dentro del juego.<br />Los fondos se generan vendiendo tus clips (Ver <span class='text-blue-600 dark:text-blue-500'>Demanda Pública</span>, <span class='text-blue-600 dark:text-blue-500'>Precio por Clip</span>, <span class='text-blue-600 dark:text-blue-500'>Marketing</span>).",
-  "unsoldInventoryInfo": "El <strong>Inventario sin vender</strong> es el número de clips que has fabricado y que superan la demanda. Es útil tenerlo lo suficientemente alto como para poder ver si el número está subiendo o bajando, y ajustarlo en consecuencia. Cuando el <span class='text-blue-600 dark:text-blue-500'>Precio por Clip</span> es demasiado alto, el stock subirá, y cuando es bajo, el stock bajará.",
-  "pricePerClipInfo":"El <strong>Precio por clip</strong> es justo lo que parece. Puede bajar o subir sus precios con los dos botones bajo esta métrica, cambiando el precio en 0,01€ cada clic. El precio tiene una relación inversa con la <span class='text-blue-600 dark:text-blue-500'>Demanda Pública</span> -- cuanto más caro es el clip, más difícil es que te paguen por él, así que si su producción excede sus ventas acumulará <span class='text-blue-600 dark:text-blue-500'>Inventario Sin Vender</span>.",
-  "publicDemandInfo":"La métrica de la <strong>Demanda Pública</strong> determinará lo atractiva que es la oferta para el público y, por tanto, lo bajo que tiene que bajar los precios para mantener un flujo de ingresos positivo. Lo contrario también es cierto. Esta métrica puede modificarse a través del <span class='text-blue-600 dark:text-blue-500'>Marketing</span>, aunque reduciendo el precio siempre aumentará, mientras que aumentándolo siempre disminuirá el valor de atractivo.<br />Ten en cuenta que la Demanda Pública puede elevarse por encima del 100%. Es sólo una métrica de la velocidad a la que se venden tus clips.",
-  "marketingInfo":"El <strong>Marketing</strong> es una métrica por niveles que afecta a la opinión que el público tiene de su producto y a la probabilidad de que lo compre (Ver: <span class='text-blue-600 dark:text-blue-500'>Demanda Pública</span>). El coste del primer nivel es de 100€. El marketing puede aumentarse con un coste exponencialmente creciente, con rendimientos decrecientes: cada nuevo nivel costará el doble que el anterior.",
-  "wireInfo":"El <strong>Cable</strong> es el principal recurso con el que se generan todos los clips. El coste del cable que se indica en la pantalla se refiere a una bobina (Inicialmente 1000 centímetros).<br />El coste de cada bobina de cable es variable.",
-  
+  "availableFundsInfo": "Tus <strong>Fondos Disponibles</strong> se muestran en la primera línea de la sección de Empresa, y se dan en cantidades de euros. Estos fondos se usan para comprar varias cosas dentro del juego.<br />Los fondos se generan vendiendo tus clips (Ver Demanda Pública, Precio por Clip, Marketing).",
+  "unsoldInventoryInfo": "El <strong>Inventario sin vender</strong> es el número de clips que has fabricado y que superan la demanda. Es útil tenerlo lo suficientemente alto como para poder ver si el número está subiendo o bajando, y ajustarlo en consecuencia. Cuando el Precio por Clip es demasiado alto, el stock subirá, y cuando es bajo, el stock bajará.",
+  "pricePerClipInfo": "El <strong>Precio por clip</strong> es justo lo que parece. Puede bajar o subir sus precios con los dos botones bajo esta métrica, cambiando el precio en 0,01€ cada clic. El precio tiene una relación inversa con la Demanda Pública -- cuanto más caro es el clip, más difícil es que te paguen por él, así que si su producción excede sus ventas acumulará Inventario Sin Vender.",
+  "publicDemandInfo": "La métrica de la <strong>Demanda Pública</strong> determinará lo atractiva que es la oferta para el público y, por tanto, lo bajo que tiene que bajar los precios para mantener un flujo de ingresos positivo. Lo contrario también es cierto. Esta métrica puede modificarse a través del Marketing, aunque reduciendo el precio siempre aumentará, mientras que aumentándolo siempre disminuirá el valor de atractivo.<br />Ten en cuenta que la Demanda Pública puede elevarse por encima del 100%. Es sólo una métrica de la velocidad a la que se venden tus clips.",
+  "marketingInfo": "El <strong>Marketing</strong> es una métrica por niveles que afecta a la opinión que el público tiene de su producto y a la probabilidad de que lo compre (Ver: Demanda Pública). El coste del primer nivel es de 100€. El marketing puede aumentarse con un coste exponencialmente creciente, con rendimientos decrecientes: cada nuevo nivel costará el doble que el anterior.",
+  "wireInfo": "El <strong>Cable</strong> es el principal recurso con el que se generan todos los clips. El coste del cable que se indica en la pantalla se refiere a una bobina (Inicialmente 1000 centímetros).<br />El coste de cada bobina de cable es variable.",
   "autoClippersInfo": "Los <strong>Auto Clippers</strong> son sistemas de recorte automatizados que generan clips para la venta de forma automática.",
-  "researchLevelInfo":"El <strong>Nivel de Investigación</strong> rige cuántos <span class='text-blue-600 dark:text-blue-500'>procesadores</span> y <span class='text-blue-600 dark:text-blue-500'>memoria</span> tienes, que a su vez rigen la tasa de generación de operaciones/creatividad por segundo y cuántas operaciones máximas están disponibles en un momento dado (respectivamente). El nivel de investigación se gana a través de proyectos o del número de sujetapapeles.",
-  "processorsInfo":"Los <strong>Procesadores</strong> determinan la velocidad a la que se completan las <span class='text-blue-600 dark:text-blue-500'>Operaciones</span> y, por tanto, los <span class='text-blue-600 dark:text-blue-500'>Proyectos</span>. Cada procesador genera 10 operaciones por segundo, y genera <span class='text-blue-600 dark:text-blue-500'>Creatividad</span>. Se pueden comprar procesadores con niveles de investigación.",
-  "memoryInfo":"La <strong>Memoria</strong> es la limitación de las operaciones máximas. A medida que aumenta la memoria también lo hace la cantidad de operaciones disponibles, en 1.000 operaciones por unidad de memoria.",
-  "operationsInfo":"Las <strong>Operaciones</strong> son la cantidad de potencia de procesamiento disponible y utilizada para varios Proyectos. La cantidad máxima de Operaciones que puede tener almacenadas se basa en la cantidad de <span class='text-blue-600 dark:text-blue-500'>Memoria</span> que haya adquirido. Se incrementa teniendo <span class='text-blue-600 dark:text-blue-500'>Procesadores</span>; cuantos más Procesadores tenga más rápido se incrementa.",
-  "creativityInfo":"La <strong>Creatividad</strong> es un recurso que se utiliza para completar Proyectos. Sólo aumenta cuando los Procesadores han terminado de crear el máximo de Operaciones disponibles en memoria, momento en el que los ciclos de Operaciones restantes se utilizan para crear Creatividad. Más procesadores aumentan la Creatividad más rápidamente.",
-  
-
-
-  "research":"Investigación",
-  "researchLevel":"Nivel de investigación",
-  "processors":"Procesadores",
-  "memory":"Memoria",
-  "operations":"Operaciones",
-  "creativity":"Creatividad",
-  "available":"disponibles",
-  
-
-
-
-
-
-
+  "researchLevelInfo": "El <strong>Nivel de Investigación</strong> rige cuántos procesadores y memoria tienes, que a su vez rigen la tasa de generación de operaciones/creatividad por segundo y cuántas operaciones máximas están disponibles en un momento dado (respectivamente). El nivel de investigación se gana a través de proyectos o del número de sujetapapeles.",
+  "processorsInfo": "Los <strong>Procesadores</strong> determinan la velocidad a la que se completan las Operaciones y, por tanto, los Proyectos. Cada procesador genera 10 operaciones por segundo, y genera Creatividad. Se pueden comprar procesadores con niveles de investigación.",
+  "memoryInfo": "La <strong>Memoria</strong> es la limitación de las operaciones máximas. A medida que aumenta la memoria también lo hace la cantidad de operaciones disponibles, en 1.000 operaciones por unidad de memoria.",
+  "operationsInfo": "Las <strong>Operaciones</strong> son la cantidad de potencia de procesamiento disponible y utilizada para varios Proyectos. La cantidad máxima de Operaciones que puede tener almacenadas se basa en la cantidad de Memoria que haya adquirido. Se incrementa teniendo Procesadores; cuantos más Procesadores tenga más rápido se incrementa.",
+  "creativityInfo": "La <strong>Creatividad</strong> es un recurso que se utiliza para completar Proyectos. Sólo aumenta cuando los Procesadores han terminado de crear el máximo de Operaciones disponibles en memoria, momento en el que los ciclos de Operaciones restantes se utilizan para crear Creatividad. Más procesadores aumentan la Creatividad más rápidamente.",
+  "research": "Investigación",
+  "researchLevel": "Nivel de investigación",
+  "processors": "Procesadores",
+  "memory": "Memoria",
+  "operations": "Operaciones",
+  "creativity": "Creatividad",
+  "available": "disponibles",
   "projects": "Proyectos",
   "completed": "completados",
   "projectRevTrackerTitle": "Seguimiento de ingresos",
