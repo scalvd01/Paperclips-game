@@ -18,7 +18,7 @@ const maxOperations = computed(
 <template>
   <div class="p-2 rounded-md divide-y-2 dark:divide-y-2 dark:divide-neutral-700">
     <div id="manufacturingTitle">
-      <h1 class="font-bold">{{ $t('research') }}</h1>
+      <h1 class="font-bold text-lg pb-1">{{ $t('research') }}</h1>
     </div>
     <div id="content">
       <h1>

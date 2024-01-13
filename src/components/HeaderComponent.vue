@@ -5,7 +5,7 @@ import MenuComponent from '@/components/MenuComponent.vue'
 </script>
 
 <template>
-  <header class="grid grid-cols-2 md:grid-cols-3 m-4 mt-6 text-ellipsis overflow-hidden">
+  <header class="mx-2 sm:mt-6 sm:mx-8 grid grid-cols-2 md:grid-cols-3 m-4 mt-6 text-ellipsis overflow-hidden">
     <PaperclipLogo class="order-1" />
 
     <ClipsNumberDisplay

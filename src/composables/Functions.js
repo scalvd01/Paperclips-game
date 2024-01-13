@@ -313,8 +313,8 @@ export default function () {
     if (mode === 'load') {
       try {
         const dataObject = JSON.parse(localStorage.getItem('saveData'))
-
         game.value = new Game(dataObject)
+        
         const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
         allProjects.forEach((element, index) => {
           element.id = projectsObject[index].id

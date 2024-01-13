@@ -10,7 +10,7 @@ const game = inject('game')
 <template>
   <div class="p-2 rounded-md divide-y-2 dark:divide-y-2 dark:divide-neutral-700">
     <div id="businessTitle">
-      <h1 class="font-bold">{{ $t('business') }}</h1>
+      <h1 class="font-bold text-lg pb-1">{{ $t('business') }}</h1>
     </div>
     <div id="content">
       <h1>

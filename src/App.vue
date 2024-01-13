@@ -8,48 +8,45 @@ import CardUpgrades from './components/CardUpgrades.vue'
 import CardResearch from './components/CardResearch.vue'
 import game from '@/classes/Game'
 
-import { useIntervalFn } from '@vueuse/core'
+import { useIntervalFn, watchOnce } from '@vueuse/core'
 import functions from '@/composables/Functions.js'
 const { mainLoopFunction, slowLoopFunction, saveLoadFunction } = functions()
 
 import { onMounted, provide, computed } from 'vue'
 import { initFlowbite } from 'flowbite'
-import { watchOnce } from '@vueuse/core'
 
-// initialize components based on data attribute selectors
 onMounted(() => {
+  // initialize components based on data attribute selectors
   initFlowbite()
-
-  //MAIN LOOP
-  const { pauseMainLoop, resumeMainLoop, isActiveMainLoop } = useIntervalFn(() => {
-    mainLoopFunction()
-  }, 10)
-
-  // SLOW LOOP
-  const { pauseSlowLoop, resumeSlowLoop, isActiveSlowLoop } = useIntervalFn(() => {
-    slowLoopFunction()
-  }, 100)
-
-  // 1 SECOND LOOP
-  const { pauseSaveLoop, resumeSaveLoop, isActiveSaveLoop } = useIntervalFn(() => {
-    saveLoadFunction('save')
-  }, 1000)
-  saveLoadFunction('load')
-
-  watchOnce(upgradesCardUnlockWatcher, () => {
-    game.value.isUpgradesCardUnlocked = true
-  })
-  
-  watchOnce(researchCardUnlockWatcher, () => {
-    game.value.isResearchUnlocked = true
-  })
 })
 
 provide('game', game)
 
 const researchCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
-
 const upgradesCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
+
+watchOnce(upgradesCardUnlockWatcher, () => {
+  game.value.isUpgradesCardUnlocked = true
+})
+
+watchOnce(researchCardUnlockWatcher, () => {
+  game.value.isResearchUnlocked = true
+})
+//MAIN LOOP
+const { pauseMainLoop, resumeMainLoop, isActiveMainLoop } = useIntervalFn(() => {
+  mainLoopFunction()
+}, 10)
+
+// SLOW LOOP
+const { pauseSlowLoop, resumeSlowLoop, isActiveSlowLoop } = useIntervalFn(() => {
+  slowLoopFunction()
+}, 100)
+
+// 1 SECOND LOOP
+const { pauseSaveLoop, resumeSaveLoop, isActiveSaveLoop } = useIntervalFn(() => {
+  saveLoadFunction('save')
+}, 1000)
+saveLoadFunction('load')
 </script>
 
 <template>
@@ -62,11 +59,9 @@ const upgradesCardUnlockWatcher = computed(() => game.value.paperclips >= 2000)
       <CardManufacturing />
       <Transition name="fade-transition">
         <CardResearch v-if="researchCardUnlockWatcher" />
-        <!-- <CardResearch v-if="game.isResearchUnlocked" /> -->
       </Transition>
       <Transition name="fade-transition">
         <CardUpgrades v-if="upgradesCardUnlockWatcher" />
-        <!-- <CardUpgrades v-if="game.isUpgradesCardUnlocked"/> -->
       </Transition>
     </div>
   </main>

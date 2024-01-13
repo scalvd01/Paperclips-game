@@ -69,7 +69,7 @@ const numberOfCompletedProjects = computed(() => {
 <template>
   <div class="p-2 rounded-md divide-y-2 dark:divide-y-2 dark:divide-neutral-700">
     <div id="upgradesTitle">
-      <h1 class="font-bold">
+      <h1 class="font-bold text-lg pb-1">
         {{ $t('projects') }}
         <span class="pl-4 text-xs font-normal text-gray-800 dark:text-gray-400"
           >({{ numberOfCompletedProjects }}/{{ allProjects.length }} {{ $t('completed') }})</span
