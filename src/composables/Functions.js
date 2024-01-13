@@ -154,39 +154,39 @@ export default function () {
   let operations = 0
   function calculateOperations() {
     if (tempOps > 0) {
-      opFadeTimer++;
+      opFadeTimer++
     }
-  
+
     if (opFadeTimer > opFadeDelay && tempOps > 0) {
-      opFade = opFade + Math.pow(3, 3.5) / 1000;
+      opFade = opFade + Math.pow(3, 3.5) / 1000
     }
-  
+
     if (tempOps > 0) {
-      tempOps = Math.round(tempOps - opFade);
+      tempOps = Math.round(tempOps - opFade)
     } else {
-      tempOps = 0;
+      tempOps = 0
     }
-  
+
     if (tempOps + game.value.operations < game.value.memory * 1000) {
-      game.value.operations = game.value.operations + tempOps;
-      tempOps = 0;
+      game.value.operations = game.value.operations + tempOps
+      tempOps = 0
     }
-  
-    operations = Math.floor(game.value.operations + Math.floor(tempOps));
-  
+
+    operations = Math.floor(game.value.operations + Math.floor(tempOps))
+
     if (operations < game.value.memory * 1000) {
-      var opCycle = game.value.processors / 10;
-      var opBuf = game.value.memory * 1000 - operations;
-  
+      var opCycle = game.value.processors / 10
+      var opBuf = game.value.memory * 1000 - operations
+
       if (opCycle > opBuf) {
-        opCycle = opBuf;
+        opCycle = opBuf
       }
-  
-      game.value.operations += opCycle;
+
+      game.value.operations += opCycle
     }
-  
+
     if (game.value.operations > game.value.memory * 1000) {
-      game.value.operations = game.value.memory * 1000;
+      game.value.operations = game.value.memory * 1000
     }
   }
 
@@ -232,9 +232,6 @@ export default function () {
 
   //SLOW LOOP
   const slowLoopFunction = function () {
-
-    
-
     // Wire Price Fluctuation
     adjustWirePrice()
     // Sales Calculator
@@ -314,18 +311,22 @@ export default function () {
       localStorage.setItem('saveProjects', JSON.stringify(allProjects))
     }
     if (mode === 'load') {
-      const dataObject = JSON.parse(localStorage.getItem('saveData'))
+      try {
+        const dataObject = JSON.parse(localStorage.getItem('saveData'))
 
-      game.value = new Game(dataObject)
-      const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
-      allProjects.forEach((element, index) => {
-        element.id = projectsObject[index].id
-        element.description = projectsObject[index].description
-        element.isUsed = projectsObject[index].isUsed
-        element.price = projectsObject[index].price
-        element.title = projectsObject[index].title
-        element.isTriggered = projectsObject[index].isTriggered
-      })
+        game.value = new Game(dataObject)
+        const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
+        allProjects.forEach((element, index) => {
+          element.id = projectsObject[index].id
+          element.description = projectsObject[index].description
+          element.isUsed = projectsObject[index].isUsed
+          element.price = projectsObject[index].price
+          element.title = projectsObject[index].title
+          element.isTriggered = projectsObject[index].isTriggered
+        })
+      } catch (error) {
+        console.log('No se pudo cargar el archivo de guardado.\n', error)
+      }
 
       // autoClippersNoti = dataObject['autoClippersNoti']
       // megaClippersNoti = dataObject['megaClippersNoti']
