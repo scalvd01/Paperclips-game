@@ -35,11 +35,7 @@ onMounted(() => {
     }
   )
   watchOnce(
-    computed(
-      () =>
-        game.value.wireLongitude >= 2600 &&
-        allProjects.find((project) => project.id === 'p11').isUsed
-    ),
+    computed(() => game.value.wireLongitude >= 2600),
     () => {
       allProjects.find((project) => project.id === 'p13').isTriggered = true
     }
