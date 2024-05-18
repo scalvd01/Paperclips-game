@@ -312,20 +312,26 @@ export default function () {
     }
     if (mode === 'load') {
       try {
-        const dataObject = JSON.parse(localStorage.getItem('saveData'))
-        game.value = new Game(dataObject)
-        
-        const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
-        allProjects.forEach((element, index) => {
-          element.id = projectsObject[index].id
-          element.description = projectsObject[index].description
-          element.isUsed = projectsObject[index].isUsed
-          element.price = projectsObject[index].price
-          element.title = projectsObject[index].title
-          element.isTriggered = projectsObject[index].isTriggered
-        })
+        if ( localStorage.getItem('saveData').includes('null') ) {
+          console.error('No se pudo cargar el archivo de guardado.\n')
+          game.value = new Game()
+        }else{
+
+          const dataObject = JSON.parse(localStorage.getItem('saveData'))
+          game.value = new Game(dataObject)
+          
+          const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
+          allProjects.forEach((element, index) => {
+            element.id = projectsObject[index].id
+            element.description = projectsObject[index].description
+            element.isUsed = projectsObject[index].isUsed
+            element.price = projectsObject[index].price
+            element.title = projectsObject[index].title
+            element.isTriggered = projectsObject[index].isTriggered
+          })
+        }
       } catch (error) {
-        console.log('No se pudo cargar el archivo de guardado.\n', error)
+        console.error('No se pudo cargar el archivo de guardado.\n', error)
       }
 
       // autoClippersNoti = dataObject['autoClippersNoti']
