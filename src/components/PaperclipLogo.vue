@@ -1,10 +1,9 @@
-<script setup></script>
 <template>
   <div class="">
-    <h1 class="absolute text-3xl font-bold flex items-baseline text-gray-800 dark:text-white">
+    <h1 class="text-3xl font-bold flex items-baseline text-gray-800 dark:text-white">
       Papercl
-      <div class="flex flex-col items-center">
-        <span class="fixed top-0 mt-1">.</span>
+      <div class="relative">
+        <span class="absolute -top-[33px] right-[1px]">.</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

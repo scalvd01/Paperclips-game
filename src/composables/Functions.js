@@ -1,5 +1,5 @@
 // import { toast } from "vue-sonner";
-import { Game } from '@/classes/Game'
+import { Game, gameparams } from '@/classes/Game'
 import game from '@/classes/Game'
 import allProjects from '@/composables/Projects'
 
@@ -312,14 +312,13 @@ export default function () {
     }
     if (mode === 'load') {
       try {
-        if ( localStorage.getItem('saveData').includes('null') ) {
+        if (localStorage.getItem('saveData').includes('null')) {
           console.error('No se pudo cargar el archivo de guardado.\n')
           game.value = new Game()
-        }else{
-
+        } else {
           const dataObject = JSON.parse(localStorage.getItem('saveData'))
           game.value = new Game(dataObject)
-          
+
           const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
           allProjects.forEach((element, index) => {
             element.id = projectsObject[index].id
@@ -339,10 +338,20 @@ export default function () {
       // autoWireBuyerNoti = dataObject['autoWireBuyerNoti']
     }
   }
+
+  const resetGame = function () {
+    game.value = new Game(gameparams)
+    allProjects.forEach((element) => {
+      element.isUsed = false
+      element.isTriggered = false
+    })
+    saveLoadFunction('save')
+  }
   return {
     slowLoopFunction,
     mainLoopFunction,
     formatWithCommas,
-    saveLoadFunction
+    saveLoadFunction,
+    resetGame
   }
 }

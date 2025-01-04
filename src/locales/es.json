@@ -100,5 +100,9 @@
   "projectCatchyJingleTitle": "Jingle pegadizo",
   "projectCatchyJingleDescription": "Dobla la eficacia del marketing",
   "projectHypnoHarmonicsTitle": "Hipnoarmónicos",
-  "projectHypnoHarmonicsDescription": "Utilizar frecuencias neurorresonantes para influir en el comportamiento del consumidor(x5 al Marketing)"
+  "projectHypnoHarmonicsDescription": "Utilizar frecuencias neurorresonantes para influir en el comportamiento del consumidor(x5 al Marketing)",
+  "tituloModalReinicio": "Reiniciar juego",
+  "textoModalReinicio": "¿Estas seguro que quieres reiniciar el juego?",
+  "botonModalReinicio": "Reiniciar",
+  "botonModalCancelar": "Cancelar"
 }

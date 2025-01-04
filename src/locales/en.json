@@ -100,5 +100,9 @@
   "projectCatchyJingleTitle": "Catchy Jingle",
   "projectCatchyJingleDescription": "Double marketing effectiveness",
   "projectHypnoHarmonicsTitle": "Hypno Harmonics",
-  "projectHypnoHarmonicsDescription": "Use neuro-resonant frequencies to influence consumer behavior (x5 to Marketing)"
+  "projectHypnoHarmonicsDescription": "Use neuro-resonant frequencies to influence consumer behavior (x5 to Marketing)",
+  "tituloModalReinicio": "Restart Game",
+  "textoModalReinicio": "Are you sure you want to restart the game?",
+  "botonModalReinicio": "Restart",
+  "botonModalCancelar": "Cancel"
 }

@@ -42,10 +42,10 @@ const { pauseSlowLoop, resumeSlowLoop, isActiveSlowLoop } = useIntervalFn(() => 
   slowLoopFunction()
 }, 100)
 
-// 1 SECOND LOOP
+// 5 SECOND LOOP
 const { pauseSaveLoop, resumeSaveLoop, isActiveSaveLoop } = useIntervalFn(() => {
   saveLoadFunction('save')
-}, 1000)
+}, 5000)
 saveLoadFunction('load')
 </script>
 

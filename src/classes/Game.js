@@ -122,7 +122,7 @@ export class Game {
   }
 }
 
-const gameparams = {
+export const gameparams = {
   paperclips: 0,
   availableFunds: 0,
   unsoldInventory: 0,
