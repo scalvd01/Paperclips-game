@@ -1,8 +1,10 @@
 {
   "idioma": "Language",
   "modo": "Mode",
+  "ajustes": "Settings",
+  "animacion": "Animation",
   "paperclips": "Paperclips",
-  "makePaperclip": "Make Paperclips",
+  "makePaperclip": "Make Paperclip",
   "business": "Business",
   "currency": "$ {number}",
   "availableFunds": "Available funds",
