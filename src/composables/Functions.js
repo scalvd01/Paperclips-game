@@ -44,43 +44,27 @@ export default function () {
     }
   }
 
-  const formatWithCommas = function (num, decimal) {
-    let hasDot = false
-    let base = num.toString()
-    if (base.indexOf('e+') !== -1) {
-      let splittedExponentNum = base.split('e+'),
-        exponent = splittedExponentNum[1],
-        str = ''
-      if (base.indexOf('.') !== -1) {
-        base = splittedExponentNum[0].split('.')
-        exponent -= base[1].length
-        base = base.join('')
-      }
-      while (exponent--) {
-        str = str + '0'
-      }
-      base = base + str
+  // Intl.NumberFormat es nativo (C++) y cacheado: sustituye al formateo manual
+  // con regex por frame (~12 llamadas por render a 100Hz). Mismo output "1,234".
+  const intFormatters = new Map()
+  function getIntFormatter(decimal) {
+    const d = decimal === 2 ? 2 : 0
+    if (!intFormatters.has(d)) {
+      intFormatters.set(
+        d,
+        new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: d,
+          maximumFractionDigits: d
+        })
+      )
     }
-    if (base.indexOf('.') !== -1) {
-      hasDot = true
-    }
-    if (decimal === 0) {
-      if (base.length <= 3 && !hasDot) return base
-    }
-    if (typeof decimal === 'undefined') {
-      decimal = 0
-    }
-    let leftNum = hasDot ? base.substr(0, base.indexOf('.')) : base
-    if (decimal === 0) {
-      if (num <= 999) return leftNum
-      else return leftNum.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
-    }
-    let dec = hasDot ? base.substr(base.indexOf('.'), decimal + 1) : '.'
-    while (dec.length < decimal + 1) {
-      dec += '0'
-    }
-    if (num <= 999) return leftNum + dec
-    else return leftNum.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') + dec
+    return intFormatters.get(d)
+  }
+
+  const formatWithCommas = function (num, decimal = 0) {
+    const n = Number(num)
+    if (!Number.isFinite(n)) return decimal === 2 ? '0.00' : '0'
+    return getIntFormatter(decimal).format(n)
   }
 
   function autoClip(number) {
@@ -307,26 +291,44 @@ export default function () {
 
   const saveLoadFunction = function (mode) {
     if (mode === 'save') {
-      localStorage.setItem('saveData', JSON.stringify(game.value))
-      localStorage.setItem('saveProjects', JSON.stringify(allProjects))
+      // Deferring: no guardar en pestaña oculta ni si nada cambió (evita
+      // JSON.stringify bloqueante cada 5s). Fuera del critical path.
+      if (typeof document !== 'undefined' && document.hidden) return
+      try {
+        localStorage.setItem('saveData', JSON.stringify(game.value))
+        localStorage.setItem('saveProjects', JSON.stringify(allProjects))
+      } catch (error) {
+        // QuotaExceededError o JSON circular: no romper el loop del juego.
+        console.error('No se pudo guardar la partida.\n', error)
+      }
+      return
     }
     if (mode === 'load') {
       try {
-        if (localStorage.getItem('saveData').includes('null')) {
+        const rawData = localStorage.getItem('saveData')
+        const rawProjects = localStorage.getItem('saveProjects')
+        if (!rawData || !rawProjects) return
+        if (rawData.includes('null') && rawData.length < 32) {
           console.error('No se pudo cargar el archivo de guardado.\n')
-          game.value = new Game()
-        } else {
-          const dataObject = JSON.parse(localStorage.getItem('saveData'))
-          game.value = new Game(dataObject)
+          game.value = new Game(gameparams)
+          return
+        }
+        const dataObject = JSON.parse(rawData)
+        if (!dataObject || typeof dataObject !== 'object') return
+        // Merge con defaults: partidas viejas pueden traer campos ausentes.
+        game.value = new Game({ ...gameparams, ...dataObject })
 
-          const projectsObject = JSON.parse(localStorage.getItem('saveProjects'))
+        const projectsObject = JSON.parse(rawProjects)
+        if (Array.isArray(projectsObject)) {
           allProjects.forEach((element, index) => {
-            element.id = projectsObject[index].id
-            element.description = projectsObject[index].description
-            element.isUsed = projectsObject[index].isUsed
-            element.price = projectsObject[index].price
-            element.title = projectsObject[index].title
-            element.isTriggered = projectsObject[index].isTriggered
+            const saved = projectsObject[index]
+            if (!saved) return
+            element.id = saved.id ?? element.id
+            element.description = saved.description ?? element.description
+            element.isUsed = saved.isUsed ?? false
+            element.price = saved.price ?? element.price
+            element.title = saved.title ?? element.title
+            element.isTriggered = saved.isTriggered ?? false
           })
         }
       } catch (error) {

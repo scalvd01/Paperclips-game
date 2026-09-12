@@ -1,47 +1,49 @@
 import { ref } from 'vue'
 
 export class Game {
-  constructor(gameparams) {
-    this.paperclips = gameparams.paperclips
-    this.availableFunds = gameparams.availableFunds
-    this.unsoldInventory = gameparams.unsoldInventory
-    this.isAvgSalesAndRevUnlocked = gameparams.isAvgSalesAndRevUnlocked
-    this.avgSales = gameparams.avgSales
-    this.avgRev = gameparams.avgRev
-    this.pricePerClip = gameparams.pricePerClip
-    this.publicDemand = gameparams.publicDemand
-    this.marketingLevel = gameparams.marketingLevel
-    this.marketingCost = gameparams.marketingCost
-    this.demandBonus = gameparams.demandBonus
-    this.universesSwitched = gameparams.universesSwitched
+  constructor(params = null) {
+    // Seguro ante saves corruptos o parciales: merge con defaults.
+    const g = { ...gameparams, ...(params || {}) }
+    this.paperclips = g.paperclips ?? 0
+    this.availableFunds = g.availableFunds
+    this.unsoldInventory = g.unsoldInventory
+    this.isAvgSalesAndRevUnlocked = g.isAvgSalesAndRevUnlocked
+    this.avgSales = g.avgSales
+    this.avgRev = g.avgRev
+    this.pricePerClip = g.pricePerClip
+    this.publicDemand = g.publicDemand
+    this.marketingLevel = g.marketingLevel
+    this.marketingCost = g.marketingCost
+    this.demandBonus = g.demandBonus
+    this.universesSwitched = g.universesSwitched
 
-    this.clipsSoldPerSecond = gameparams.clipsSoldPerSecond
-    this.clipsMadePerSecond = gameparams.clipsMadePerSecond
-    this.isAutoWireBuyerUnlocked = gameparams.isAutoWireBuyerUnlocked
-    this.wireLongitude = gameparams.wireLongitude
-    this.wireCost = gameparams.wireCost
-    this.wireBonus = gameparams.wireBonus
-    this.timesWirePurchased = gameparams.timesWirePurchased
-    this.isAutoClipperUnlocked = gameparams.isAutoClipperUnlocked
-    this.autoClippers = gameparams.autoClippers
-    this.autoClipperCost = gameparams.autoClipperCost
-    this.autoClipperBoost = gameparams.autoClipperBoost
-    this.isMegaClipperUnlocked = gameparams.isMegaClipperUnlocked
-    this.megaClippers = gameparams.megaClippers
-    this.megaClipperCost = gameparams.megaClipperCost
-    this.megaClipperBoost = gameparams.megaClipperBoost
+    this.clipsSoldPerSecond = g.clipsSoldPerSecond
+    this.clipsMadePerSecond = g.clipsMadePerSecond
+    this.isAutoWireBuyerUnlocked = g.isAutoWireBuyerUnlocked
+    this.wireLongitude = g.wireLongitude
+    this.wireCost = g.wireCost
+    this.wireBonus = g.wireBonus
+    this.timesWirePurchased = g.timesWirePurchased
+    this.isAutoClipperUnlocked = g.isAutoClipperUnlocked
+    this.autoClippers = g.autoClippers
+    this.autoClipperCost = g.autoClipperCost
+    this.autoClipperBoost = g.autoClipperBoost
+    this.isMegaClipperUnlocked = g.isMegaClipperUnlocked
+    this.megaClippers = g.megaClippers
+    this.megaClipperCost = g.megaClipperCost
+    this.megaClipperBoost = g.megaClipperBoost
 
-    this.isUpgradesCardUnlocked = gameparams.isUpgradesCardUnlocked
+    this.isUpgradesCardUnlocked = g.isUpgradesCardUnlocked
 
-    this.isResearchUnlocked = gameparams.isResearchUnlocked
-    this.researchLevel = gameparams.researchLevel
-    this.nextResearchLevel = gameparams.nextResearchLevel
-    this.processors = gameparams.processors
-    this.memory = gameparams.memory
-    this.operations = gameparams.operations
-    this.isCreativityUnlocked = gameparams.isCreativityUnlocked
-    this.creativity = gameparams.creativity
-    this.creativitySpeed = gameparams.creativitySpeed
+    this.isResearchUnlocked = g.isResearchUnlocked
+    this.researchLevel = g.researchLevel
+    this.nextResearchLevel = g.nextResearchLevel
+    this.processors = g.processors
+    this.memory = g.memory
+    this.operations = g.operations
+    this.isCreativityUnlocked = g.isCreativityUnlocked
+    this.creativity = g.creativity
+    this.creativitySpeed = g.creativitySpeed
 
     this.updatePublicDemand()
   }
@@ -62,6 +64,11 @@ export class Game {
     this.updatePublicDemand()
   }
   updatePublicDemand() {
+    // Clamp: un save corrupto con price<=0 disparaba publicDemand a Infinity
+    // y arrastraba clipsSoldPerSecond (NaN en la UI a 100Hz).
+    if (!Number.isFinite(this.pricePerClip) || this.pricePerClip < 0.01) {
+      this.pricePerClip = 0.01
+    }
     this.publicDemand =
       (1 + 0.1 * this.universesSwitched) *
       Math.pow(1.1, this.marketingLevel - 1) *

@@ -13,18 +13,28 @@
 
 
 .fade-transition-enter-active {
-  transition: all 0.3s ease-out;
+  /* Compositor: solo transform+opacity van al hilo del compositor.
+     `transition: all` forzaba layout/paint en el main thread. */
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   animation:blink-1 .3s both
 }
 
 .fade-transition-leave-active {
-  transition: all 0.3s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
 .fade-transition-enter-from,
 .fade-transition-leave-to {
   transform: translateX(40px);
   opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-transition-enter-active,
+  .fade-transition-leave-active {
+    transition: none;
+    animation: none;
+  }
 }
 
 @keyframes blink-1{0%,50%,100%{opacity:1}25%,75%{opacity:0}}

@@ -23,37 +23,36 @@ function executeProject(projectID) {
   project.isUsed = true
 }
 onMounted(() => {
+  // Eliminate work: cachear los find() para no hacer búsqueda lineal en cada
+  // evaluación de los watchers (corren a la frecuencia del game loop).
+  const p10 = allProjects.find((project) => project.id === 'p10')
+  const p11 = allProjects.find((project) => project.id === 'p11')
+  const p13 = allProjects.find((project) => project.id === 'p13')
+  const p14 = allProjects.find((project) => project.id === 'p14')
+  const p15 = allProjects.find((project) => project.id === 'p15')
   //watchers para los proyectos de cable que tienen que llegar a una determinada longitud
   watchOnce(
-    computed(
-      () =>
-        game.value.wireLongitude >= 1500 &&
-        allProjects.find((project) => project.id === 'p10').isUsed
-    ),
+    computed(() => game.value.wireLongitude >= 1500 && p10.isUsed),
     () => {
-      allProjects.find((project) => project.id === 'p11').isTriggered = true
+      p11.isTriggered = true
     }
   )
   watchOnce(
     computed(() => game.value.wireLongitude >= 2600),
     () => {
-      allProjects.find((project) => project.id === 'p13').isTriggered = true
+      p13.isTriggered = true
     }
   )
   watchOnce(
-    computed(
-      () =>
-        game.value.wireLongitude >= 5000 &&
-        allProjects.find((project) => project.id === 'p13').isUsed
-    ),
+    computed(() => game.value.wireLongitude >= 5000 && p13.isUsed),
     () => {
-      allProjects.find((project) => project.id === 'p14').isTriggered = true
+      p14.isTriggered = true
     }
   )
   watchOnce(
     computed(() => game.value.wireCost >= 100),
     () => {
-      allProjects.find((project) => project.id === 'p15').isTriggered = true
+      p15.isTriggered = true
     }
   )
 })
@@ -99,7 +98,7 @@ const numberOfCompletedProjects = computed(() => {
   animation-delay: 500ms;
 }
 .list-enter-active {
-  transition: all 0.3s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   animation: blink-1 0.3s both;
 }
 
@@ -116,7 +115,7 @@ const numberOfCompletedProjects = computed(() => {
 }
 
 .list-leave-active {
-  transition: all 0.2s ease-in;
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 }
 
 .list-enter-from,

@@ -15,6 +15,10 @@ function loadLocaleMessages() {
 export default createI18n({
   locale: 'es',
   fallbackLocale: 'en',
+  // Eliminate work: sin warnings por cada $t con HTML en producción.
+  // (Se mantiene legacy:true porque las plantillas usan $i18n.locale = ...)
+  missingWarn: false,
+  fallbackWarn: false,
   warnHtmlInMessage: 'off',
   messages: loadLocaleMessages()
 })

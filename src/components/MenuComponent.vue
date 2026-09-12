@@ -91,6 +91,14 @@ const infoArray = [
 
 const isInfoPingActive = useStorage('isInfoPingActive', true)
 
+// Eliminate work: antes el template llamaba item.trigger() con v-show en cada
+// render (11 chequeos reactivos por frame). Este computed lo evalúa una vez
+// por cambio reactivo. Se mantiene v-show (no v-if) para no romper los
+// bindings del acordeón de flowbite inicializados en el mount.
+const infoVisibility = computed(() =>
+  infoArray.map((item) => ({ item, visible: item.trigger() }))
+)
+
 onMounted(() => {
   watchOnce(
     computed(() => game.value.isResearchUnlocked),
@@ -294,8 +302,8 @@ onMounted(() => {
           <!-- Modal footer/info -->
 
           <div class="p-3" id="accordion-collapse" data-accordion="collapse">
-            <div v-for="(item, index) in infoArray" :key="index">
-              <div v-show="item.trigger()">
+            <div v-for="(entry, index) in infoVisibility" :key="entry.item.title">
+              <div v-show="entry.visible">
                 <h2 :id="'accordion-collapse-heading-' + index">
                   <button
                     type="button"
@@ -319,7 +327,7 @@ onMounted(() => {
                           stroke-width="2"
                           d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                         /></svg
-                      ><span class="text-gray-800 dark:text-white">{{ $t(item.title) }} </span>
+                      ><span class="text-gray-800 dark:text-white">{{ $t(entry.item.title) }} </span>
                     </div>
 
                     <svg
@@ -348,7 +356,7 @@ onMounted(() => {
                   <div
                     class="p-5 border border-t-0 border-gray-200 dark:border-gray-600 dark:bg-grey-800"
                   >
-                    <p class="mb-2 text-gray-700 dark:text-gray-200" v-html="$t(item.info)"></p>
+                    <p class="mb-2 text-gray-700 dark:text-gray-200" v-html="$t(entry.item.info)"></p>
                   </div>
                 </div>
               </div>
